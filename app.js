@@ -7,7 +7,7 @@ let participants = {};  // Dynamisch hinzugefügte Teilnehmer
 let avatars = {
     "Teilnehmer 1": {
         name: "Kai",
-        avatar: "https://example.com/avatar_kai.png",  // Beispiel Avatar Bild URL
+        avatar: "https://example.com/your_avatar_image.jpg",  // Hier Avatar Bild URL einfügen
         summary: "Kai spricht über das Meeting und was als nächstes getan werden muss."
     },
     "Teilnehmer 2": {
@@ -122,5 +122,5 @@ function updateParticipantAvatar(currentParticipant) {
 
 function viewSummary(participant) {
     // Weiterleitung zur Detailansicht des Teilnehmers (Zusammenfassung)
-    window.location.href = `/${participant}_summary.html`;  // Korrektur der URL Weiterleitung
+    window.location.href = `/participant_summary/${participant}`;  // Korrektur der URL Weiterleitung
 }
