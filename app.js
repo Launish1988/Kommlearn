@@ -7,7 +7,7 @@ let participants = {};  // Dynamisch hinzugefügte Teilnehmer
 let avatars = {
     "Teilnehmer 1": {
         name: "Kai",
-        avatar: "https://example.com/your_avatar_image.jpg",  // Hier Avatar Bild URL einfügen
+        avatar: "https://example.com/your_avatar_image.jpg",  // Avatar Bild URL hier
         summary: "Kai spricht über das Meeting und was als nächstes getan werden muss."
     },
     "Teilnehmer 2": {
@@ -72,7 +72,6 @@ function analyzeEmotion(text) {
 }
 
 function identifyParticipant(text) {
-    // Dynamische Teilnehmerzuweisung basierend auf der Sprache
     let currentParticipant = "Unbekannt";
     if (text.includes("Kai")) {
         if (!participants["Kai"]) {
@@ -112,7 +111,6 @@ function updateParticipantSummary() {
 }
 
 function updateParticipantAvatar(currentParticipant) {
-    // Avatare anzeigen basierend auf der dynamischen Teilnehmerzuweisung
     const participantId = currentParticipant;
     const avatarElement = document.getElementById("avatar" + participantId);
     if (avatarElement) {
@@ -121,6 +119,6 @@ function updateParticipantAvatar(currentParticipant) {
 }
 
 function viewSummary(participant) {
-    // Weiterleitung zur Detailansicht des Teilnehmers (Zusammenfassung)
-    window.location.href = `/participant_summary/${participant}`;  // Korrektur der URL Weiterleitung
+    // Weiterleitung zur Detailansicht des Teilnehmers
+    window.location.href = `/participant_summary/${participant}`;  // URL für Detailansicht korrigiert
 }
