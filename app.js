@@ -73,10 +73,12 @@ function identifyParticipant(text) {
         currentParticipant = "Kai";
         document.getElementById("participant1").innerText = "Kai";
         document.getElementById("avatar1").style.display = "block";
+        document.getElementById("avatar2").style.display = "none";  // Andere Teilnehmer Avatar ausblenden
     } else if (text.includes("Sophie")) {
         currentParticipant = "Sophie";
         document.getElementById("participant2").innerText = "Sophie";
         document.getElementById("avatar2").style.display = "block";
+        document.getElementById("avatar1").style.display = "none";  // Andere Teilnehmer Avatar ausblenden
     }
 }
 
