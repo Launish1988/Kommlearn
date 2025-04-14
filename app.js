@@ -2,15 +2,16 @@
 let recording = false;
 let recognition;
 let transcriptionText = "";
-let emotionHistory = []; 
+let emotionHistory = [];
+let currentParticipant = "Teilnehmer 1";  // Dynamisch zugewiesener Teilnehmer
 let avatars = {
-    Alex: {
-        name: 'Alex',
-        summary: 'Alex spricht viel über das nächste Projekt.'
+    "Teilnehmer 1": {
+        name: "Teilnehmer 1",
+        summary: "Teilnehmer 1 spricht über das Meeting und was als nächstes getan werden muss."
     },
-    Sophie: {
-        name: 'Sophie',
-        summary: 'Sophie spricht über die Herausforderungen bei der Arbeit.'
+    "Teilnehmer 2": {
+        name: "Teilnehmer 2",
+        summary: "Teilnehmer 2 spricht über wichtige Entscheidungen und die nächsten Schritte."
     }
 };
 
@@ -24,9 +25,10 @@ if ('webkitSpeechRecognition' in window) {
         for (let i = event.resultIndex; i < event.results.length; i++) {
             transcript += event.results[i][0].transcript;
         }
-        
+
         transcriptionText += transcript + ' '; 
         analyzeEmotion(transcriptionText);
+        identifyParticipant(transcript);
     };
 
     recognition.onerror = function(event) {
@@ -65,27 +67,38 @@ function analyzeEmotion(text) {
     updateSummary(emotion);
 }
 
+function identifyParticipant(text) {
+    if (text.includes("Kai")) {
+        currentParticipant = "Kai";
+        document.getElementById("participant1").innerText = "Kai";
+        document.getElementById("avatar1").style.display = "block";
+    } else if (text.includes("Sophie")) {
+        currentParticipant = "Sophie";
+        document.getElementById("participant2").innerText = "Sophie";
+        document.getElementById("avatar2").style.display = "block";
+    }
+}
+
 function updateSummary(emotion) {
     const summaryText = `Das Gespräch war überwiegend von Emotionen wie ${emotion} geprägt. Es wurden viele Themen angesprochen.`;
     document.getElementById("summaryText").innerText = summaryText;
-    
-    // Update each avatar's individual summary
-    updateAvatarSummary();
+
+    // Update participant summaries based on their name
+    updateParticipantSummary();
 }
 
-function updateAvatarSummary() {
-    const alexSummary = document.getElementById("alexSummary");
-    const sophieSummary = document.getElementById("sophieSummary");
+function updateParticipantSummary() {
+    const participant1Summary = document.getElementById("participant1Summary");
+    const participant2Summary = document.getElementById("participant2Summary");
 
-    // Assigning summary per avatar
-    alexSummary.innerText = avatars.Alex.summary;
-    sophieSummary.innerText = avatars.Sophie.summary;
+    participant1Summary.innerText = avatars["Teilnehmer 1"].summary;
+    participant2Summary.innerText = avatars["Teilnehmer 2"].summary;
     
     // Add click event to avatars to display their summary
-    document.getElementById("avatarAlex").addEventListener('click', function() {
-        alert(avatars.Alex.summary);
+    document.getElementById("avatar1").addEventListener('click', function() {
+        alert(avatars["Teilnehmer 1"].summary);
     });
-    document.getElementById("avatarSophie").addEventListener('click', function() {
-        alert(avatars.Sophie.summary);
+    document.getElementById("avatar2").addEventListener('click', function() {
+        alert(avatars["Teilnehmer 2"].summary);
     });
 }

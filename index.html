@@ -11,31 +11,28 @@
     <div id="app">
         <h1>ReflectVerse: Dein Gesprächs-Coach</h1>
         <button id="startBtn">Aufnahme starten</button>
-        
-        <!-- Änderung hier: Zusammenfassung des Gesprächs -->
+
         <div id="summary">
             <h2>Gesprächszusammenfassung:</h2>
             <p id="summaryText">Warte auf Aufnahme...</p>
         </div>
 
-        <!-- Emotionale Stimmung: Zeigt die allgemeine Stimmung des Gesprächs -->
         <div id="emotion">
             <h2>Emotionale Stimmung:</h2>
             <p id="emotionResult">Wird analysiert...</p>
         </div>
 
-        <!-- Darstellung der Avatare -->
         <div id="avatars">
             <h2>Gesprächsteilnehmer:</h2>
-            <div class="avatar" id="avatarAlex">
-                <img src="avatar.png" alt="Avatar Alex" />
-                <p>Alex</p>
-                <div id="alexSummary" class="avatarSummary">Keine Zusammenfassung</div>
+            <div class="avatar" id="avatar1" style="display: none;">
+                <img src="avatar.png" alt="Avatar Teilnehmer 1" />
+                <p id="participant1">Teilnehmer 1</p>
+                <div id="participant1Summary" class="avatarSummary">Keine Zusammenfassung</div>
             </div>
-            <div class="avatar" id="avatarSophie">
-                <img src="avatar.png" alt="Avatar Sophie" />
-                <p>Sophie</p>
-                <div id="sophieSummary" class="avatarSummary">Keine Zusammenfassung</div>
+            <div class="avatar" id="avatar2" style="display: none;">
+                <img src="avatar.png" alt="Avatar Teilnehmer 2" />
+                <p id="participant2">Teilnehmer 2</p>
+                <div id="participant2Summary" class="avatarSummary">Keine Zusammenfassung</div>
             </div>
         </div>
     </div>
