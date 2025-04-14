@@ -7,10 +7,12 @@ let participants = {};  // Dynamisch hinzugefügte Teilnehmer
 let avatars = {
     "Teilnehmer 1": {
         name: "Teilnehmer 1",
+        avatar: "avatar_image_1.png",  // Beispiel Avatar
         summary: "Teilnehmer 1 spricht über das Meeting und was als nächstes getan werden muss."
     },
     "Teilnehmer 2": {
         name: "Teilnehmer 2",
+        avatar: "avatar_image_2.png",  // Beispiel Avatar
         summary: "Teilnehmer 2 spricht über wichtige Entscheidungen und die nächsten Schritte."
     }
 };
@@ -22,14 +24,13 @@ if ('webkitSpeechRecognition' in window) {
 
     recognition.onresult = function(event) {
         let transcript = '';
-        let currentParticipant = "Unbekannt";  // Initiale Zuweisung
         for (let i = event.resultIndex; i < event.results.length; i++) {
             transcript += event.results[i][0].transcript;
         }
 
         transcriptionText += transcript + ' ';
         analyzeEmotion(transcriptionText);
-        currentParticipant = identifyParticipant(transcript);
+        let currentParticipant = identifyParticipant(transcript);
         updateParticipantAvatar(currentParticipant);
     };
 
@@ -70,47 +71,57 @@ function analyzeEmotion(text) {
 }
 
 function identifyParticipant(text) {
-    // Dynamische Teilnehmerzuweisung basierend auf der Sprache (nicht nur Namen)
-    if (!participants["Teilnehmer 1"] && (text.includes("stimme 1") || text.includes("später"))) {
-        participants["Teilnehmer 1"] = {
-            name: "Teilnehmer 1",
-            avatar: "avatar_image_1.png",  // Beispiel-Avatar
-        };
-        return "Teilnehmer 1";
-    } else if (!participants["Teilnehmer 2"] && (text.includes("stimme 2") || text.includes("klingt"))) {
-        participants["Teilnehmer 2"] = {
-            name: "Teilnehmer 2",
-            avatar: "avatar_image_2.png",  // Beispiel-Avatar
-        };
-        return "Teilnehmer 2";
+    // Dynamische Erkennung der Stimme und Zuordnung zu einem Teilnehmer
+    let currentParticipant = "Unbekannt";
+    if (text.includes("Kai")) {
+        if (!participants["Kai"]) {
+            participants["Kai"] = avatars["Teilnehmer 1"];
+        }
+        currentParticipant = "Kai";
+    } else if (text.includes("Lisa")) {
+        if (!participants["Lisa"]) {
+            participants["Lisa"] = avatars["Teilnehmer 2"];
+        }
+        currentParticipant = "Lisa";
+    } else {
+        if (!participants["Teilnehmer 1"]) {
+            participants["Teilnehmer 1"] = avatars["Teilnehmer 1"];
+        }
+        currentParticipant = "Teilnehmer 1";  // Standard Teilnehmer
     }
-    return "Unbekannt";  // Fallback, falls Teilnehmer nicht erkannt werden
+    return currentParticipant;
 }
 
 function updateSummary(emotion) {
     const summaryText = `Das Gespräch war überwiegend von Emotionen wie ${emotion} geprägt. Es wurden viele Themen angesprochen.`;
     document.getElementById("summaryText").innerText = summaryText;
 
-    // Update participant summaries based on their name
+    // Teilnehmer-Zusammenfassung basierend auf deren Gesprächsanteil
     updateParticipantSummary();
 }
 
 function updateParticipantSummary() {
     let summaryHTML = "";
     for (let key in participants) {
-        summaryHTML += `<div class="avatar" id="avatar${key}" style="display: block;">`;
+        summaryHTML += `<div class="avatar" id="avatar${key}" style="display: block;" onclick="viewSummary('${key}')">`;
         summaryHTML += `<img src="${participants[key].avatar}" alt="Avatar ${key}" />`;
         summaryHTML += `<p>${participants[key].name}</p>`;
-        summaryHTML += `<div class="avatarSummary">${avatars[key].summary}</div>`;
+        summaryHTML += `<div class="avatarSummary">${participants[key].summary}</div>`;
         summaryHTML += `</div>`;
     }
     document.getElementById("avatars").innerHTML = summaryHTML;
 }
 
 function updateParticipantAvatar(currentParticipant) {
-    const participantId = "avatar" + currentParticipant;
-    const avatarElement = document.getElementById(participantId);
+    // Avatare anzeigen basierend auf der dynamischen Teilnehmerzuweisung
+    const participantId = currentParticipant;
+    const avatarElement = document.getElementById("avatar" + participantId);
     if (avatarElement) {
         avatarElement.style.display = "block"; // Avatar sichtbar machen
     }
+}
+
+function viewSummary(participant) {
+    // Weiterleitung zur Detailansicht des Teilnehmers (Zusammenfassung)
+    window.location.href = `${participant}_summary.html`;
 }
