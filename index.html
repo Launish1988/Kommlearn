@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReflectVerse Web-App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>ReflectVerse: Dein Gesprächs-Coach</h1>
+        <button id="startBtn">Aufnahme starten</button>
+        <div id="transcription">
+            <h2>Transkription:</h2>
+            <p id="transcribedText">Warte auf Aufnahme...</p>
+        </div>
+        <div id="emotion">
+            <h2>Emotionale Stimmung:</h2>
+            <p id="emotionResult">Wird analysiert...</p>
+        </div>
+        <div id="dashboard">
+            <h2>Tageszusammenfassung:</h2>
+            <ul id="topContents">
+                <!-- Die wichtigsten Gesprächsinhalte erscheinen hier -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
