@@ -7,12 +7,12 @@ let participants = {};  // Dynamisch hinzugefügte Teilnehmer
 let avatars = {
     "Teilnehmer 1": {
         name: "Kai",
-        avatar: "avatar_image_1.png",  // Beispiel Avatar Bild
+        avatar: "https://example.com/avatar_kai.png",  // Beispiel Avatar Bild URL
         summary: "Kai spricht über das Meeting und was als nächstes getan werden muss."
     },
     "Teilnehmer 2": {
         name: "Lisa",
-        avatar: "avatar_image_2.png",  // Beispiel Avatar Bild
+        avatar: "https://example.com/avatar_lisa.png",  // Beispiel Avatar Bild URL
         summary: "Lisa spricht über wichtige Entscheidungen und die nächsten Schritte."
     }
 };
