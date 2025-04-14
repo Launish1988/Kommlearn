@@ -3,7 +3,7 @@ let recording = false;
 let recognition;
 let transcriptionText = "";
 let emotionHistory = [];
-let currentParticipant = "Teilnehmer 1";  // Dynamisch zugewiesener Teilnehmer
+let participants = {};  // Dynamisch hinzugefügte Teilnehmer
 let avatars = {
     "Teilnehmer 1": {
         name: "Teilnehmer 1",
@@ -22,13 +22,15 @@ if ('webkitSpeechRecognition' in window) {
 
     recognition.onresult = function(event) {
         let transcript = '';
+        let currentParticipant = "Unbekannt";  // Initiale Zuweisung
         for (let i = event.resultIndex; i < event.results.length; i++) {
             transcript += event.results[i][0].transcript;
         }
 
         transcriptionText += transcript + ' ';
         analyzeEmotion(transcriptionText);
-        identifyParticipant(transcript);
+        currentParticipant = identifyParticipant(transcript);
+        updateParticipantAvatar(currentParticipant);
     };
 
     recognition.onerror = function(event) {
@@ -68,18 +70,21 @@ function analyzeEmotion(text) {
 }
 
 function identifyParticipant(text) {
-    // Dynamische Zuweisung von Teilnehmern basierend auf den erkannten Namen
-    if (text.includes("Kai")) {
-        currentParticipant = "Kai";
-        document.getElementById("participant1").innerText = "Kai";
-        document.getElementById("avatar1").style.display = "block";
-        document.getElementById("avatar2").style.display = "none";  // Andere Teilnehmer Avatar ausblenden
-    } else if (text.includes("Sophie")) {
-        currentParticipant = "Sophie";
-        document.getElementById("participant2").innerText = "Sophie";
-        document.getElementById("avatar2").style.display = "block";
-        document.getElementById("avatar1").style.display = "none";  // Andere Teilnehmer Avatar ausblenden
+    // Dynamische Teilnehmerzuweisung basierend auf der Sprache (nicht nur Namen)
+    if (!participants["Teilnehmer 1"] && (text.includes("stimme 1") || text.includes("später"))) {
+        participants["Teilnehmer 1"] = {
+            name: "Teilnehmer 1",
+            avatar: "avatar_image_1.png",  // Beispiel-Avatar
+        };
+        return "Teilnehmer 1";
+    } else if (!participants["Teilnehmer 2"] && (text.includes("stimme 2") || text.includes("klingt"))) {
+        participants["Teilnehmer 2"] = {
+            name: "Teilnehmer 2",
+            avatar: "avatar_image_2.png",  // Beispiel-Avatar
+        };
+        return "Teilnehmer 2";
     }
+    return "Unbekannt";  // Fallback, falls Teilnehmer nicht erkannt werden
 }
 
 function updateSummary(emotion) {
@@ -91,17 +96,21 @@ function updateSummary(emotion) {
 }
 
 function updateParticipantSummary() {
-    const participant1Summary = document.getElementById("participant1Summary");
-    const participant2Summary = document.getElementById("participant2Summary");
+    let summaryHTML = "";
+    for (let key in participants) {
+        summaryHTML += `<div class="avatar" id="avatar${key}" style="display: block;">`;
+        summaryHTML += `<img src="${participants[key].avatar}" alt="Avatar ${key}" />`;
+        summaryHTML += `<p>${participants[key].name}</p>`;
+        summaryHTML += `<div class="avatarSummary">${avatars[key].summary}</div>`;
+        summaryHTML += `</div>`;
+    }
+    document.getElementById("avatars").innerHTML = summaryHTML;
+}
 
-    participant1Summary.innerText = avatars["Teilnehmer 1"].summary;
-    participant2Summary.innerText = avatars["Teilnehmer 2"].summary;
-
-    // Add click event to avatars to navigate to the new page with their summary
-    document.getElementById("avatar1").addEventListener('click', function() {
-        window.location.href = "participant1_summary.html";
-    });
-    document.getElementById("avatar2").addEventListener('click', function() {
-        window.location.href = "participant2_summary.html";
-    });
+function updateParticipantAvatar(currentParticipant) {
+    const participantId = "avatar" + currentParticipant;
+    const avatarElement = document.getElementById(participantId);
+    if (avatarElement) {
+        avatarElement.style.display = "block"; // Avatar sichtbar machen
+    }
 }
