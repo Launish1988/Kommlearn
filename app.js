@@ -95,11 +95,11 @@ function updateParticipantSummary() {
     participant1Summary.innerText = avatars["Teilnehmer 1"].summary;
     participant2Summary.innerText = avatars["Teilnehmer 2"].summary;
 
-    // Add click event to avatars to display their summary
+    // Add click event to avatars to navigate to the new page with their summary
     document.getElementById("avatar1").addEventListener('click', function() {
-        alert(avatars["Teilnehmer 1"].summary);
+        window.location.href = "participant1_summary.html";
     });
     document.getElementById("avatar2").addEventListener('click', function() {
-        alert(avatars["Teilnehmer 2"].summary);
+        window.location.href = "participant2_summary.html";
     });
 }
