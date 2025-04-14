@@ -1,19 +1,20 @@
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #83a4d4, #b6fbff);
     text-align: center;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
 #app {
-    max-width: 600px;
+    max-width: 800px;
     margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -24,6 +25,7 @@ button {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -45,9 +47,14 @@ ul {
 }
 
 li {
-    background-color: #f9f9f9;
+    background-color: #f4f4f4;
     margin: 5px;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+#avatars p {
+    font-size: 18px;
+    color: #777;
 }

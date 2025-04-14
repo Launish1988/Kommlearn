@@ -1,10 +1,9 @@
 
-// Sprachaufnahme
 let recording = false;
 let recognition;
 let transcriptionText = "";
-let emotionHistory = []; // Speicherung der emotionalen Analyse
-let avatars = ['Alex', 'Sophie']; // Beispielhafte Teilnehmernamen
+let emotionHistory = []; 
+let avatars = ['Alex', 'Sophie'];
 
 if ('webkitSpeechRecognition' in window) {
     recognition = new webkitSpeechRecognition();
@@ -17,11 +16,9 @@ if ('webkitSpeechRecognition' in window) {
             transcript += event.results[i][0].transcript;
         }
         
-        // Füge das neue Transkript zum bisherigen hinzu
         transcriptionText += transcript + ' '; 
         document.getElementById("transcribedText").innerText = transcriptionText;
 
-        // Emotionale Analyse durchführen
         analyzeEmotion(transcriptionText);
     };
 
@@ -50,9 +47,7 @@ function stopRecording() {
     document.getElementById("startBtn").innerText = "Aufnahme starten";
 }
 
-// Emotionale Analyse (Dummy-API)
 function analyzeEmotion(text) {
-    // Simulierte Analyse von Emotionen
     let emotion = 'Neutral';
     if (text.includes("glücklich") || text.includes("freude")) {
         emotion = 'Fröhlich';
@@ -63,7 +58,6 @@ function analyzeEmotion(text) {
     updateDashboard(emotion);
 }
 
-// Dashboard
 function updateDashboard(emotion) {
     const topContents = document.getElementById("topContents");
     topContents.innerHTML = '';
@@ -71,6 +65,5 @@ function updateDashboard(emotion) {
     newItem.textContent = "Gesprächsinhalt: " + emotion;
     topContents.appendChild(newItem);
     
-    // Teilnehmer-Avatare dynamisch anzeigen
     document.getElementById("avatarNames").innerText = "Teilnehmer: " + avatars.join(", ");
 }
