@@ -3,6 +3,8 @@
 let recording = false;
 let recognition;
 let transcriptionText = "";
+let emotionHistory = []; // Speicherung der emotionalen Analyse
+let avatars = ['Alex', 'Sophie']; // Beispielhafte Teilnehmernamen
 
 if ('webkitSpeechRecognition' in window) {
     recognition = new webkitSpeechRecognition();
@@ -14,8 +16,12 @@ if ('webkitSpeechRecognition' in window) {
         for (let i = event.resultIndex; i < event.results.length; i++) {
             transcript += event.results[i][0].transcript;
         }
-        transcriptionText = transcript;
+        
+        // Füge das neue Transkript zum bisherigen hinzu
+        transcriptionText += transcript + ' '; 
         document.getElementById("transcribedText").innerText = transcriptionText;
+
+        // Emotionale Analyse durchführen
         analyzeEmotion(transcriptionText);
     };
 
@@ -64,4 +70,7 @@ function updateDashboard(emotion) {
     const newItem = document.createElement("li");
     newItem.textContent = "Gesprächsinhalt: " + emotion;
     topContents.appendChild(newItem);
+    
+    // Teilnehmer-Avatare dynamisch anzeigen
+    document.getElementById("avatarNames").innerText = "Teilnehmer: " + avatars.join(", ");
 }
