@@ -3,7 +3,16 @@ let recording = false;
 let recognition;
 let transcriptionText = "";
 let emotionHistory = []; 
-let avatars = ['Alex', 'Sophie'];
+let avatars = {
+    Alex: {
+        name: 'Alex',
+        summary: 'Alex spricht viel über das nächste Projekt.'
+    },
+    Sophie: {
+        name: 'Sophie',
+        summary: 'Sophie spricht über die Herausforderungen bei der Arbeit.'
+    }
+};
 
 if ('webkitSpeechRecognition' in window) {
     recognition = new webkitSpeechRecognition();
@@ -17,8 +26,6 @@ if ('webkitSpeechRecognition' in window) {
         }
         
         transcriptionText += transcript + ' '; 
-        document.getElementById("transcribedText").innerText = transcriptionText;
-
         analyzeEmotion(transcriptionText);
     };
 
@@ -55,15 +62,30 @@ function analyzeEmotion(text) {
         emotion = 'Traurig';
     }
     document.getElementById("emotionResult").innerText = "Emotion: " + emotion;
-    updateDashboard(emotion);
+    updateSummary(emotion);
 }
 
-function updateDashboard(emotion) {
-    const topContents = document.getElementById("topContents");
-    topContents.innerHTML = '';
-    const newItem = document.createElement("li");
-    newItem.textContent = "Gesprächsinhalt: " + emotion;
-    topContents.appendChild(newItem);
+function updateSummary(emotion) {
+    const summaryText = `Das Gespräch war überwiegend von Emotionen wie ${emotion} geprägt. Es wurden viele Themen angesprochen.`;
+    document.getElementById("summaryText").innerText = summaryText;
     
-    document.getElementById("avatarNames").innerText = "Teilnehmer: " + avatars.join(", ");
+    // Update each avatar's individual summary
+    updateAvatarSummary();
+}
+
+function updateAvatarSummary() {
+    const alexSummary = document.getElementById("alexSummary");
+    const sophieSummary = document.getElementById("sophieSummary");
+
+    // Assigning summary per avatar
+    alexSummary.innerText = avatars.Alex.summary;
+    sophieSummary.innerText = avatars.Sophie.summary;
+    
+    // Add click event to avatars to display their summary
+    document.getElementById("avatarAlex").addEventListener('click', function() {
+        alert(avatars.Alex.summary);
+    });
+    document.getElementById("avatarSophie").addEventListener('click', function() {
+        alert(avatars.Sophie.summary);
+    });
 }
