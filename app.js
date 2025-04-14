@@ -7,12 +7,12 @@ let participants = {};  // Dynamisch hinzugefügte Teilnehmer
 let avatars = {
     "Teilnehmer 1": {
         name: "Kai",
-        avatar: "avatar_image.png",  // Direktes Bild eingebunden
+        avatar: "avatar_image.png",  // Bild URL hier
         summary: "Kai spricht über das Meeting und was als nächstes getan werden muss."
     },
     "Teilnehmer 2": {
         name: "Lisa",
-        avatar: "avatar_lisa.png",  // Direktes Bild eingebunden
+        avatar: "avatar_lisa.png",  // Beispiel Bild URL
         summary: "Lisa spricht über wichtige Entscheidungen und die nächsten Schritte."
     }
 };
@@ -119,6 +119,6 @@ function updateParticipantAvatar(currentParticipant) {
 }
 
 function viewSummary(participant) {
-    // Weiterleitung zur Detailansicht des Teilnehmers (Zusammenfassung)
-    window.location.href = `/participant_summary/${participant}`;  // Korrektur der URL Weiterleitung
+    // Hier wird nun die richtige Zusammenfassung angezeigt, ohne Fehler
+    alert(avatars[participant].summary);  // Einfacher Alert mit der Zusammenfassung des Teilnehmers
 }
