@@ -119,6 +119,6 @@ function updateParticipantAvatar(currentParticipant) {
 }
 
 function viewSummary(participant) {
-    // Hier wird nun die richtige Zusammenfassung angezeigt, ohne Fehler
-    alert(avatars[participant].summary);  // Einfacher Alert mit der Zusammenfassung des Teilnehmers
+    // Weiterleitung zur Detailansicht des Teilnehmers in einer neuen Seite (statt Popup)
+    window.location.href = `participant_summary_${participant}.html`;  // Neue Seite für die Zusammenfassung
 }
