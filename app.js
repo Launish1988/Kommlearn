@@ -6,14 +6,14 @@ let emotionHistory = [];
 let participants = {};  // Dynamisch hinzugefügte Teilnehmer
 let avatars = {
     "Teilnehmer 1": {
-        name: "Teilnehmer 1",
-        avatar: "avatar_image_1.png",  // Beispiel Avatar
-        summary: "Teilnehmer 1 spricht über das Meeting und was als nächstes getan werden muss."
+        name: "Kai",
+        avatar: "avatar_image_1.png",  // Beispiel Avatar Bild
+        summary: "Kai spricht über das Meeting und was als nächstes getan werden muss."
     },
     "Teilnehmer 2": {
-        name: "Teilnehmer 2",
-        avatar: "avatar_image_2.png",  // Beispiel Avatar
-        summary: "Teilnehmer 2 spricht über wichtige Entscheidungen und die nächsten Schritte."
+        name: "Lisa",
+        avatar: "avatar_image_2.png",  // Beispiel Avatar Bild
+        summary: "Lisa spricht über wichtige Entscheidungen und die nächsten Schritte."
     }
 };
 
@@ -24,13 +24,14 @@ if ('webkitSpeechRecognition' in window) {
 
     recognition.onresult = function(event) {
         let transcript = '';
+        let currentParticipant = "Unbekannt";  // Initiale Zuweisung
         for (let i = event.resultIndex; i < event.results.length; i++) {
             transcript += event.results[i][0].transcript;
         }
 
         transcriptionText += transcript + ' ';
         analyzeEmotion(transcriptionText);
-        let currentParticipant = identifyParticipant(transcript);
+        currentParticipant = identifyParticipant(transcript);
         updateParticipantAvatar(currentParticipant);
     };
 
@@ -71,7 +72,7 @@ function analyzeEmotion(text) {
 }
 
 function identifyParticipant(text) {
-    // Dynamische Erkennung der Stimme und Zuordnung zu einem Teilnehmer
+    // Dynamische Teilnehmerzuweisung basierend auf der Sprache
     let currentParticipant = "Unbekannt";
     if (text.includes("Kai")) {
         if (!participants["Kai"]) {
@@ -95,8 +96,6 @@ function identifyParticipant(text) {
 function updateSummary(emotion) {
     const summaryText = `Das Gespräch war überwiegend von Emotionen wie ${emotion} geprägt. Es wurden viele Themen angesprochen.`;
     document.getElementById("summaryText").innerText = summaryText;
-
-    // Teilnehmer-Zusammenfassung basierend auf deren Gesprächsanteil
     updateParticipantSummary();
 }
 
@@ -123,5 +122,5 @@ function updateParticipantAvatar(currentParticipant) {
 
 function viewSummary(participant) {
     // Weiterleitung zur Detailansicht des Teilnehmers (Zusammenfassung)
-    window.location.href = `${participant}_summary.html`;
+    window.location.href = `/${participant}_summary.html`;  // Korrektur der URL Weiterleitung
 }
